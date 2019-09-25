@@ -26,7 +26,7 @@ SolidusPaypalBraintree.PaypalButton = function(element, paypalOptions, options) 
  * See {@link https://braintree.github.io/braintree-web/3.9.0/PayPal.html#tokenize}
  */
 SolidusPaypalBraintree.PaypalButton.prototype.initialize = function() {
-  this._client = new SolidusPaypalBraintree.createClient({useDataCollector: true, usePaypal: true});
+  this._client = new SolidusPaypalBraintree.createClient({useDataCollector: false, usePaypal: true});
 
   return this._client.initialize().then(this.initializeCallback.bind(this));
 };
@@ -36,6 +36,12 @@ SolidusPaypalBraintree.PaypalButton.prototype.initializeCallback = function() {
 
   paypal.Button.render({
     env: this._environment,
+    style: {
+      size: "large",
+      color: "blue",
+      label: "pay",
+      tagline: false
+    },
 
     payment: function () {
       return this._client.getPaypalInstance().createPayment(this._paypalOptions);
